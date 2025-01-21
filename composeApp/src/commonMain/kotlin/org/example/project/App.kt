@@ -23,6 +23,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import kmm.composeapp.generated.resources.Res
 import kmm.composeapp.generated.resources.compose_multiplatform
+import kmm.composeapp.generated.resources.img_one
 
 @Composable
 @Preview
@@ -46,7 +47,7 @@ fun App() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
                     Image(
-                        painter = painterResource(Res.drawable.compose_multiplatform),
+                        painter = painterResource(Res.drawable.img_one),
                         contentDescription = null,
                         modifier = Modifier.fillMaxWidth()
                     )
