@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -27,58 +28,39 @@ import kmm.composeapp.generated.resources.img_four
 import kmm.composeapp.generated.resources.img_one
 import kmm.composeapp.generated.resources.img_three
 import kmm.composeapp.generated.resources.img_two
+import org.example.project.model.UserItem
+import org.example.project.viewmodel.UserViewModel
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun HomePage(username: String) {
-
-    //Sample Movie list
-    val sampleMovies = listOf(
-        Movie("ဇော်ဂနီ", Res.drawable.img_one),
-        Movie("သားတော်မောင်", Res.drawable.img_two),
-        Movie("မင်းမျက်ဝန်း", Res.drawable.img_three),
-        Movie("အပြုံးမင်းသား", Res.drawable.img_four),
-        Movie("စိတ်စေတနာ", Res.drawable.img_five),
-    )
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(Modifier.height(16.dp))
-        Text("Welcome $username")
-        Spacer(Modifier.height(16.dp))
-        MovieList(sampleMovies)
-    }
-}
-
-@Composable
-fun MovieItem(movie: Movie){
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(8.dp)
+    val userViewModel : UserViewModel = remember { UserViewModel() }
+    val users by userViewModel.users.collectAsState()
+    LazyColumn (
+        modifier = Modifier.fillMaxSize()
     ){
-        Image(
-            painter = painterResource(movie.image),
-            contentDescription = null,
-            modifier = Modifier.size(128.dp)
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = movie.title,
-            style = MaterialTheme.typography.subtitle1
-        )
-    }
-}
-
-// Horizontal list of movies
-@Composable
-fun MovieList(movies: List<Movie>){
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ){
-        items(movies){ movie ->
-            MovieItem(movie)
+        items(users){
+            UserItemView(it)
         }
     }
 }
+
+@Composable
+fun UserItemView(user: UserItem){
+    Column(
+        modifier = Modifier.padding(12.dp)
+    ){
+        Text(
+            text = user.name,
+            style = MaterialTheme.typography.h6
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = user.email,
+            style = MaterialTheme.typography.h6
+        )
+    }
+}
+
+
+
